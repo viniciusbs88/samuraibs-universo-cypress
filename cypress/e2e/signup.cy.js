@@ -104,7 +104,7 @@ describe('cadastro usuário', () => {
         })
     })
 
-    context.only('quando não preencho nenhum dos campos', () => {
+    context('quando não preencho nenhum dos campos', () => {
         const msgs = [
             'Nome é obrigatório',
             'E-mail é obrigatório',
