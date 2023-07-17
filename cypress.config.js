@@ -5,10 +5,10 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       const pool = new Pool({
-        host: 'queenie.db.elephantsql.com',
-        user: 'qilxuabq',
-        password: 'HUCqlP1qJY65f1nXXT4u0opmeoTAtbF1',
-        database: 'qilxuabq',
+        host: '',
+        user: '',
+        password: '',
+        database: '',
         port: 5432
       })
 
