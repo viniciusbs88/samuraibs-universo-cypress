@@ -1,4 +1,4 @@
-const { defineConfig } = require("cypress")
+const { defineConfig } = require('cypress')
 const { Pool } = require('pg')
 
 module.exports = defineConfig({
