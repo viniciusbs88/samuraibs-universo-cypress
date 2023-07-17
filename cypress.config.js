@@ -1,16 +1,11 @@
 const { defineConfig } = require('cypress')
 const { Pool } = require('pg')
+const { dbConfig } = require('./db-config.js')
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      const pool = new Pool({
-        host: 'queenie.db.elephantsql.com',
-        user: 'qilxuabq',
-        password: 'HUCqlP1qJY65f1nXXT4u0opmeoTAtbF1',
-        database: 'qilxuabq',
-        port: 5432
-      })
+      const pool = new Pool(dbConfig)
 
       on('task', {
         removeUser(email) {
