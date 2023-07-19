@@ -111,7 +111,7 @@ describe('cadastro usuário', () => {
             'Senha é obrigatória'
         ]
 
-        before(() => {
+        beforeEach(() => {
             signupPage.go()
             signupPage.submit()
         })
