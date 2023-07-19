@@ -40,18 +40,7 @@ describe('cadastro usuário', () => {
         }
 
         before(() => {
-            cy.task('removeUser', user.email)
-                .then((result) => {
-                    console.log(result)
-                })
-
-            cy.request(
-                'POST',
-                'http://localhost:3333/users',
-                user
-            ).then((response) => {
-                expect(response.status).to.eq(200)
-            })
+            cy.postUser(user)
         })
 
         it('deve impedir cadastro de usuário repetido', () => {
@@ -75,14 +64,14 @@ describe('cadastro usuário', () => {
             signupPage.fillForm(user)
             signupPage.submit()
 
-            signupPage.alertHasMsg('Informe um email válido')
+            signupPage.checkAlertMsg('Informe um email válido')
         })
     })
 
     context('quando a senha possui menos de 6 caracteres', () => {
         const passwords = ['1', '12', '123', '1234', '12345']
 
-        beforeEach(() => {
+        before(() => {
             signupPage.go()
         })
 
@@ -100,7 +89,7 @@ describe('cadastro usuário', () => {
         })
 
         afterEach(() => {
-            signupPage.alertHasMsg('Pelo menos 6 caracteres')
+            signupPage.checkAlertMsg('Pelo menos 6 caracteres')
         })
     })
 
@@ -111,14 +100,14 @@ describe('cadastro usuário', () => {
             'Senha é obrigatória'
         ]
 
-        beforeEach(() => {
+        before(() => {
             signupPage.go()
             signupPage.submit()
         })
 
         msgs.forEach((alert) => {
             it(`deve exibir '${alert.toLowerCase()}'`, () => {
-                signupPage.alertHasMsg(alert)
+                signupPage.checkAlertMsg(alert)
             })
         })
     })

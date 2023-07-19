@@ -12,17 +12,23 @@ class SignupPage {
     }
 
     fillForm(user) {
-        cy.get(el.name).type(user.name)
-        cy.get(el.email).type(user.email)
-        cy.get(el.password).type(user.password)
+        cy.get(el.name)
+            .clear()
+            .type(user.name)
+        cy.get(el.email)
+            .clear()
+            .type(user.email)
+        cy.get(el.password)
+            .clear()
+            .type(user.password)
     }
 
     submit() {
         cy.contains(el.signupButton).click()
     }
 
-    alertHasMsg(expectedMsg) {
-        cy.contains(el.fieldAlert, expectedMsg)
+    checkAlertMsg(expectedMsg) {
+        cy.contains(el.alertError, expectedMsg)
             .should('be.visible')
     }
 }

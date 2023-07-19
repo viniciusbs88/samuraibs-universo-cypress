@@ -1,3 +1,4 @@
 exports.el = {
-    header: 'header a strong'
+    fullName: 'header a strong',
+    logoutButton: 'header button'
 }
