@@ -64,7 +64,7 @@ describe('cadastro usuário', () => {
             signupPage.fillForm(user)
             signupPage.submit()
 
-            signupPage.checkAlertMsg('Informe um email válido')
+            signupPage.alertField.checkMsg('Informe um email válido')
         })
     })
 
@@ -89,7 +89,7 @@ describe('cadastro usuário', () => {
         })
 
         afterEach(() => {
-            signupPage.checkAlertMsg('Pelo menos 6 caracteres')
+            signupPage.alertField.checkMsg('Pelo menos 6 caracteres')
         })
     })
 
@@ -107,7 +107,7 @@ describe('cadastro usuário', () => {
 
         msgs.forEach((alert) => {
             it(`deve exibir '${alert.toLowerCase()}'`, () => {
-                signupPage.checkAlertMsg(alert)
+                signupPage.alertField.checkMsg(alert)
             })
         })
     })

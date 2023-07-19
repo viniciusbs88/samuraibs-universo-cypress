@@ -78,7 +78,7 @@ describe('login', () => {
                 loginPage.fillForm(user)
                 loginPage.submit()
 
-                loginPage.checkAlertMsg('Informe um email válido')
+                loginPage.alertField.checkMsg('Informe um email válido')
             })
         })
 
@@ -97,7 +97,7 @@ describe('login', () => {
 
         msgs.forEach((alert) => {
             it(`deve exibir '${alert.toLowerCase()}'`, () => {
-                loginPage.checkAlertMsg(alert)
+                loginPage.alertField.checkMsg(alert)
             })
         })
     })

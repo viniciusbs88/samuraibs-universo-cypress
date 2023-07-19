@@ -1,10 +1,12 @@
 
 import { el } from './elements'
 import toaster from '../../components/toast'
+import alertField from '../../components/alertField'
 
 class LoginPage {
     constructor() {
         this.toaster = toaster
+        this.alertField = alertField
     }
 
     go() {
@@ -23,11 +25,6 @@ class LoginPage {
     submit() {
         cy.contains(el.loginButton)
             .click()
-    }
-
-    checkAlertMsg(msg) {
-        cy.contains(el.alertError, msg)
-            .should('be.visible')
     }
 }
 
