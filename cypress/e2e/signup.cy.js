@@ -3,16 +3,26 @@ import { faker } from '@faker-js/faker'
 import signupPage from '../support/pages/signup'
 
 describe('cadastro usuário', () => {
-    context('quando o usuário é novo', () => {
-        const user = {
-            name: 'Vinícius',
-            email: 'vini@test.com',
-            //email : faker.internet.email(),
-            password: 'pwd123'
-        }
+    let entries = {
+        success : null,
+        alreadyExists : null,
+        invalidEmail : null,
+        invalidPassword : null
+    }
 
+    before(() => {
+        cy.fixture('signup')
+            .then((signup) => {
+                entries.success = signup.success
+                entries.alreadyExists = signup.alreadyExists
+                entries.invalidEmail = signup.invalidEmail
+                entries.invalidPassword = signup.invalidPassword
+            })
+    })
+
+    context('quando o usuário é novo', () => {
         before(() => {
-            cy.task('removeUser', user.email)
+            cy.task('removeUser', entries.success.email)
                 .then((result) => {
                     console.log(result)
                 })
@@ -20,7 +30,7 @@ describe('cadastro usuário', () => {
 
         it('deve cadastrar um novo usuário', () => {
             signupPage.go()
-            signupPage.fillForm(user)
+            signupPage.fillForm(entries.success)
             //    cy.intercept('POST', '/users', {
             //        statusCode : 200
             //    }).as('postUser')    
@@ -32,20 +42,13 @@ describe('cadastro usuário', () => {
     })
 
     context('quando o usuário já existe', () => {
-        const user = {
-            name: 'Zezin',
-            email: 'zezin@test.com',
-            password: 'pwd123',
-            is_provider: true
-        }
-
         before(() => {
-            cy.postUser(user)
+            cy.postUser(entries.alreadyExists)
         })
 
         it('deve impedir cadastro de usuário repetido', () => {
             signupPage.go()
-            signupPage.fillForm(user)
+            signupPage.fillForm(entries.alreadyExists)
             signupPage.submit()
 
             signupPage.toast.checkMsg('Email já cadastrado para outro usuário.')
@@ -53,15 +56,9 @@ describe('cadastro usuário', () => {
     })
 
     context('quando o email é incorreto', () => {
-        const user = {
-            name: 'Elizabeth Olsen',
-            email: 'liza.yahoo.com',
-            password: 'pwd123'
-        }
-
         it('deve exibir mensagem de alerta', () => {
             signupPage.go()
-            signupPage.fillForm(user)
+            signupPage.fillForm(entries.invalidEmail)
             signupPage.submit()
 
             signupPage.alertField.checkMsg('Informe um email válido')
@@ -77,13 +74,9 @@ describe('cadastro usuário', () => {
 
         passwords.forEach(p => {
             it(`não deve cadastrar senha com ${p.length} caractere${p.length > 1 ? 's' : ''}`, () => {
-                const user = {
-                    name: 'Elizabeth Olsen',
-                    email: 'liza@yahoo.com',
-                    password: p
-                }
+                entries.invalidPassword.password = p
 
-                signupPage.fillForm(user)
+                signupPage.fillForm(entries.invalidPassword)
                 signupPage.submit()
             })
         })

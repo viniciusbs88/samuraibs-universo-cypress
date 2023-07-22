@@ -1,0 +1,23 @@
+{
+  "success": {
+    "name": "Vinícius",
+    "email": "vini@test.com",
+    "password": "pwd123"
+  },
+  "alreadyExists": {
+    "name": "Zezin",
+    "email": "zezin@test.com",
+    "password": "pwd123",
+    "is_provider": true
+  },
+  "invalidEmail": {
+    "name": "Elizabeth Olsen",
+    "email": "liza.yahoo.com",
+    "password": "pwd123"
+  },
+  "invalidPassword": {
+    "name": "Elizabeth Olsen",
+    "email": "liza@yahoo.com",
+    "password": null
+  }
+}
