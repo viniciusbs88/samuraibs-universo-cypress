@@ -1,5 +1,5 @@
 import forgotPasswordPage from "../support/pages/forgotpassword"
-
+import resetpass from "../support/pages/resetpass"
 
 describe('resgate de senha', () => {
     let lisa 
@@ -21,16 +21,22 @@ describe('resgate de senha', () => {
         })
     })
 
-    context.only('quando o usuário solicita o resgate', () => {
+    context('quando o usuário solicita o resgate', () => {
         before(() => {
             cy.postUser(lisa)
             cy.recoveryPass(lisa.email)
         })
 
         it('deve poder cadastrar uma nova senha', () => {            
-            console.log(Cypress.env('recoveryToken'))
+            const token = Cypress.env('recoveryToken')
+
+            resetpass.go(token)
+            resetpass.form('abc123', 'abc123')
+            resetpass.submit()
+
+            const msg = 'Agora você já pode logar com a sua nova senha secreta.'
+
+            resetpass.toast.checkMsg(msg)
         })
-
-
     })
 })
