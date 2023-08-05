@@ -16,6 +16,20 @@ module.exports = defineConfig({
               resolve({ successs: result })
             })
           })
+        },
+        findToken(email) {
+          return new Promise((resolve) => {
+            pool.query(`SELECT B.token FROM
+                public.users A
+                INNER JOIN public.user_tokens B
+                ON A.id = B.user_id
+                WHERE A.email = '${email}'
+                ORDER BY B.created_at`, (error, result) => {
+                  if(error)
+                    throw error
+                    resolve({token: result.rows[0].token})
+                })
+          })
         }
       })
     },
